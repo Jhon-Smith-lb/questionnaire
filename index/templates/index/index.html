@@ -1,0 +1,110 @@
+{% extends "index/Base.html" %}
+{% block content %}
+    <!--page title start-->
+    <div class="page-heading">
+        <div class="container-fluid">
+            <div class="row d-flex align-items-center">
+                <div class="col-12">
+                    <div class="page-breadcrumb">
+                        <h1>欢迎参与调查</h1>
+                    </div>
+                </div>
+                <div class="col-12  d-md-flex">
+                    <div class="breadcrumb_nav">
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                注：本调查为匿名调查，请放心填写。
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--page title end-->
+    <form action="{% url 'vote' %}" method="post">
+        {% csrf_token %}
+        <div class="container-fluid">
+            <!-- state start-->
+            <div class="row">
+                <div class=" col-12">
+                    {% if single %}
+                        <div class="card card-shadow mb-4">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    单项选择
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- 单选 -->
+                                {% for question in single %}
+                                    <p class="fw-600">问题{{ forloop.counter }}：{{ question.title }}</p>
+                                    {% for choice in question.choice_set.all %}<label class="custom-control custom-radio">
+                                        <input id="choice{{ forloop.parentloop.counter }}" name="{{ question.id }}"
+                                               type="radio" class="custom-control-input" value="{{ choice.id }}" required>
+                                        <span class="custom-control-indicator"
+                                              for="choice{{ forloop.parentloop.counter }}"></span>
+                                        <span class="custom-control-description">{{ choice.title }}</span>
+                                    </label><br />
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if multiply %}
+                        <div class="card card-shadow mb-4">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    多项选择
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <!-- 多选 -->
+                                {% for question in multiply %}
+                                    <p class="fw-600">问题{{ forloop.counter }}：{{ question.title }}</p>
+                                    {% for choice in question.choice_set.all %}<label class="custom-control custom-checkbox">
+                                        <input id="choice{{ forloop.parentloop.counter }}" name="{{ question.id }}"
+                                               type="checkbox" class="custom-control-input" value="{{ choice.id }}">
+                                        <span class="custom-control-indicator"
+                                              for="choice{{ forloop.parentloop.counter }}"></span>
+                                        <span class="custom-control-description">{{ choice.title }}</span>
+                                    </label><br />
+                                    {% endfor %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if advice %}
+                        <!-- 填写意见或建议 -->
+                        <div class="card card-shadow mb-4">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    填写意见或建议
+                                </div>
+                            </div>
+                            <div class="card-body">
+                            {% for question in advice %}
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1" class="fw-600">问题{{ forloop.counter }}：{{ question.question_text }}</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{ question.id }}" required></textarea>
+                                </div>
+                                <br />
+                            {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if  single or multiply or advice %}
+                        <div>
+                            <div class="card-title">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-primary">提交</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <!-- state end-->
+        </div>
+    </form>
+{% endblock content %}
