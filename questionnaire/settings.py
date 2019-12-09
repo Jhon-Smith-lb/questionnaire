@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'index',
+    'result',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -131,4 +133,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-
+# 配置自定义用户表
+AUTH_USER_MODEL = 'user.MyUser'

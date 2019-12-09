@@ -6,7 +6,7 @@
             <div class="row d-flex align-items-center">
                 <div class="col-12">
                     <div class="page-breadcrumb">
-                        <h1>欢迎参与调查</h1>
+                        <h1>{{ table.title }}</h1>
                     </div>
                 </div>
                 <div class="col-12  d-md-flex">
@@ -85,7 +85,7 @@
                             <div class="card-body">
                             {% for question in advice %}
                                 <div class="form-group">
-                                    <label for="exampleFormControlTextarea1" class="fw-600">问题{{ forloop.counter }}：{{ question.question_text }}</label>
+                                    <label for="exampleFormControlTextarea1" class="fw-600">问题{{ forloop.counter }}：{{ question.title }}</label>
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="{{ question.id }}" required></textarea>
                                 </div>
                                 <br />

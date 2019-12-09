@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 
-from .models import Table, Question, Choice, Advice, File
+from .models import Table, Question, Choice, Advice
+from user.models import MyUser
 
 admin.site.site_title = '调查问卷后台管理系统'
 admin.site.site_header = '调查问卷后台管理系统'
@@ -26,6 +27,7 @@ class TableAdmin(admin.ModelAdmin):
         (None, {'fields': ['title', 'description']}),
         ('时间信息', {'fields': ['time']}),
         ('问卷状态', {'fields': ['status']}),
+        ('拥有者', {'fields': ['owner']}),
     ]
     inlines = [QuestionInline]
     ordering = ['time']
@@ -64,6 +66,8 @@ class ChoiceAdmin(admin.ModelAdmin):
 class AdviceAdmin(admin.ModelAdmin):
     pass
 
-@admin.register(File)
-class FileAdmin(admin.ModelAdmin):
+
+@admin.register(MyUser)
+class MyUserAdmin(admin.ModelAdmin):
     pass
+

@@ -1,4 +1,5 @@
 from django.db import models
+from user.models import MyUser
 
 
 class Table(models.Model):
@@ -9,6 +10,7 @@ class Table(models.Model):
         (STATUS_UNPUB, '暂不发布'),
     ]
     title = models.TextField(verbose_name='问卷标题')
+    owner = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     description = models.TextField(verbose_name='问卷说明', blank=True)
     time = models.DateTimeField(verbose_name='创建时间')
     status = models.IntegerField(default=STATUS_PUB,
@@ -78,13 +80,4 @@ class Advice(models.Model):
         return self.advice_text
 
 
-class File(models.Model):
-    title = models.CharField(max_length=50, verbose_name='文件名称')
-    files = models.FileField(upload_to="files", verbose_name='上传文件')
-
-    class Meta:
-        verbose_name_plural = verbose_name = '文件上传'
-
-    def __str__(self):
-        return self.title
 
